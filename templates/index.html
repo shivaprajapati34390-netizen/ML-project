@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Housing Price Predictor</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Poppins", sans-serif;
+            background: linear-gradient(to right, #4b79a1, #283e51);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 420px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0px 20px 40px rgba(0,0,0,0.2);
+            text-align: center;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(20px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        h2 {
+            color: #283e51;
+            margin-bottom: 10px;
+        }
+
+        .input-group {
+            text-align: left;
+            margin-top: 15px;
+        }
+
+        label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #aaa;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus, select:focus {
+            border-color: #4b79a1;
+            box-shadow: 0px 0px 5px rgba(75, 121, 161, 0.5);
+        }
+
+        .btn {
+            margin-top: 20px;
+            width: 100%;
+            background: #4b79a1;
+            color: #fff;
+            padding: 12px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #35516d;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #283e51;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🏠 Housing Price Predictor</h2>
+        <p>Enter the property details below to estimate price.</p>
+
+        <form action="/predict" method="POST">
+
+            <!-- You can rename fields based on your model -->
+            <div class="input-group">
+                <label>Median Income</label>
+                <input type="number" step="any" name="median_income" required>
+            </div>
+
+            <div class="input-group">
+                <label>House Age</label>
+                <input type="number" step="any" name="housing_median_age" required>
+            </div>
+
+            <div class="input-group">
+                <label>Total Rooms</label>
+                <input type="number" step="any" name="total_rooms" required>
+            </div>
+
+            <div class="input-group">
+                <label>Total Bedrooms</label>
+                <input type="number" step="any" name="total_bedrooms" required>
+            </div>
+
+            <div class="input-group">
+                <label>Population</label>
+                <input type="number" step="any" name="population" required>
+            </div>
+
+            <div class="input-group">
+                <label>Households</label>
+                <input type="number" step="any" name="households" required>
+            </div>
+
+            <div class="input-group">
+                <label>Latitude</label>
+                <input type="number" step="any" name="latitude" required>
+            </div>
+
+            <div class="input-group">
+                <label>Longitude</label>
+                <input type="number" step="any" name="longitude" required>
+            </div>
+
+            <div class="input-group">
+                <label>Ocean Proximity</label>
+                <select name="ocean_proximity" required>
+                    <option value="NEAR BAY">Near Bay</option>
+                    <option value="<1H OCEAN">Less than 1H Ocean</option>
+                    <option value="INLAND">Inland</option>
+                    <option value="NEAR OCEAN">Near Ocean</option>
+                    <option value="ISLAND">Island</option>
+                </select>
+            </div>
+
+            <button class="btn" type="submit">Predict Price</button>
+        </form>
+
+        {% if prediction_text %}
+        <div class="result">{{ prediction_text }}</div>
+        {% endif %}
+    </div>
+</body>
+</html>
